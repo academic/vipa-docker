@@ -1,4 +1,4 @@
-erver {
+server {
   listen                *:80;
   server_name           ojs.dev www.ojs.dev demo.ojs.dev  *.ojs.dev;
   root /var/www/web ;
@@ -13,11 +13,11 @@ erver {
       }
   location ~ ^/(app|app_dev|app_local|config)\.php(/|$) {
       fastcgi_pass 127.0.0.1:9000;
-fastcgi_buffer_size     16k;
-fastcgi_buffers         4 16k;
-fastcgi_split_path_info ^(.+\.php)(/.*)$;
-include                 fastcgi_params;
-fastcgi_param           SCRIPT_FILENAME $document_root$fastcgi_script_name;
-  fastcgi_param           HTTPS           off;
+      fastcgi_buffer_size     16k;
+      fastcgi_buffers         4 16k;
+      fastcgi_split_path_info ^(.+\.php)(/.*)$;
+      include                 fastcgi_params;
+      fastcgi_param           SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      fastcgi_param           HTTPS           off;
  }
 }

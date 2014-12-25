@@ -66,6 +66,5 @@ RUN mkdir -p /data/db
 
 EXPOSE 80 3306 27017
 
-
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 CMD ["/usr/bin/supervisord"]
