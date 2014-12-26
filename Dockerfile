@@ -58,7 +58,7 @@ RUN apt-get -y install mongodb-10gen
 
 RUN mkdir -p /data/db
 RUN bash -c "wget http://getcomposer.org/composer.phar && mv composer.phar /usr/local/bin/composer"
-
+RUN chmod +x /usr/local/bin/composer
 EXPOSE 80 3306 27017
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
