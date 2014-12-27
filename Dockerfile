@@ -57,7 +57,33 @@ RUN apt-get -y install mongodb-10gen
 RUN mkdir -p /data/db
 RUN bash -c "wget http://getcomposer.org/composer.phar && mv composer.phar /usr/local/bin/composer"
 RUN chmod +x /usr/local/bin/composer
-EXPOSE 80 3306 27017
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+#Elasticsearch
+ENV ES_PKG_NAME elasticsearch-1.4.1
+RUN \
+  cd / && \
+  wget https://download.elasticsearch.org/elasticsearch/elasticsearch/$ES_PKG_NAME.tar.gz && \
+  tar xvzf $ES_PKG_NAME.tar.gz && \
+  rm -f $ES_PKG_NAME.tar.gz && \
+  mv /$ES_PKG_NAME /elasticsearch
+VOLUME ["/data"]
+ADD conf/elasticsearch.yml /elasticsearch/config/elasticsearch.yml
+# Install Java.
+RUN \
+  echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  add-apt-repository -y ppa:webupd8team/java && \
+  apt-get update && \
+  apt-get install -y oracle-java7-installer && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -rf /var/cache/oracle-jdk7-installer
+
+# Define working directory.
+WORKDIR /data
+
+# Define commonly used JAVA_HOME variable
+ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
+
+#      HTTP Mysql MongoDB ElasticSearch ElasticSearch
+EXPOSE 80 3306 27017 9200 9300
 CMD ["/usr/bin/supervisord"]
