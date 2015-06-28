@@ -70,6 +70,7 @@ ADD supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 ADD mysql.sh /usr/local/bin/mysql.sh
 RUN chmod +x /usr/local/bin/mysql.sh
 ADD init.sh /init.sh
+RUN chmod +x /init.sh
 
 EXPOSE 80 3306 9200 9300
 
