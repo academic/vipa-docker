@@ -34,7 +34,8 @@ RUN echo "deb http://packages.elastic.co/elasticsearch/1.6/debian stable main" >
 
 RUN apt-get update && apt-get install -y git nginx php5-fpm php5-mysqlnd php5-redis php5-cli mysql-server redis-server supervisor php5-dev php-pear elasticsearch && rm -rf /var/lib/apt/lists/*
 
-
+RUN ln -sf /dev/stdout /var/log/nginx/access.log
+RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 RUN sed -e 's/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/error_reporting = E_ALL/' -i /etc/php5/cli/php.ini
 RUN sed -e 's/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/error_reporting = E_ALL/' -i /etc/php5/fpm/php.ini
