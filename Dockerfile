@@ -32,7 +32,7 @@ RUN curl https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add -
 RUN echo "deb http://packages.elastic.co/elasticsearch/1.6/debian stable main" >> /etc/apt/sources.list
 
 
-RUN apt-get update && apt-get install -y git nginx php5-fpm php5-mysqlnd php5-redis php5-cli mysql-server redis-server supervisor php5-dev php-pear elasticsearch && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git nginx php5-fpm php5-mysqlnd php5-redis php5-cli php5-memcached mysql-server redis-server memcached supervisor php5-dev php-pear elasticsearch && rm -rf /var/lib/apt/lists/*
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
@@ -72,6 +72,16 @@ ADD mysql.sh /usr/local/bin/mysql.sh
 RUN chmod +x /usr/local/bin/mysql.sh
 ADD init.sh /init.sh
 RUN chmod +x /init.sh
+
+RUN ln -sf /dev/stdout /var/log/nginx/access.log
+RUN ln -sf /dev/stderr /var/log/nginx/error.log
+RUN ln -sf /dev/stderr /srv/app/logs/nginx.log
+RUN ln -sf /dev/stderr /srv/app/logs/php.log
+RUN ln -sf /dev/stderr /srv/app/logs/mysql.log
+RUN ln -sf /dev/stderr /srv/app/logs/redis.log
+RUN ln -sf /dev/stderr /srv/app/logs/elastic.log
+RUN ln -sf /dev/stderr /srv/app/logs/memecache.log
+RUN ln -sf /dev/stderr /srv/app/logs/init.log
 
 EXPOSE 80 3306 9200 9300
 
