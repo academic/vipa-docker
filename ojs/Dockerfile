@@ -41,8 +41,9 @@ ARG GITHUB_TOKEN
 ADD app/ /var/www/html
 WORKDIR /var/www/html
 
-RUN composer update -vvv -o && \
-    bower update && \
+RUN composer update -vvv -o
+
+RUN bower update && \
     php app/console assets:install web --symlink && \
     php app/console assetic:dump && \
     chmod -R 777 app/cache app/logs && \
