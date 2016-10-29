@@ -43,7 +43,7 @@ ARG GITHUB_TOKEN
 ADD app/ /var/www/html
 WORKDIR /var/www/html
 
-RUN composer config -g http://github-oauth.github.com  ${GITHUB_TOKEN} --no-plugins --no-scripts
+RUN composer config --global github-oauth.github.com  ${GITHUB_TOKEN}
 
 RUN composer update -vvv -o
 
