@@ -24,7 +24,7 @@ RUN set -ex \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && echo "{}" > ~/.composer/composer.json
 
-COPY ojs/symfony.ini /usr/local/etc/php/conf.d/
+COPY symfony.ini /usr/local/etc/php/conf.d/
 
 EXPOSE 9000
 CMD ["php-fpm"]
