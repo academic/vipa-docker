@@ -11,16 +11,13 @@ RUN set -ex \
     && npm install -g bower \
     && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
     && curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/php7.tar.gz \
-    && curl -L -o /tmp/v8js.tar.gz https://github.com/phpv8/v8js/archive/1.3.2.tar.gz \
     && tar xfz /tmp/redis.tar.gz \
-    && tar xfz /tmp/v8js.tar.gz \
     && mkdir -p /usr/src/php/ext \
     && mv phpredis-php7 /usr/src/php/ext/redis \
-    && mv v8js-1.3.2 /usr/src/php/ext/v8js \
     && yes 'no' | pecl install -f apcu-5.1.5 \
     && docker-php-ext-enable apcu \
-    && docker-php-ext-install v8js redis gmp pdo pdo_pgsql opcache zip \
-    && rm -rf /usr/src/php/ext/redis /tmp/redis.tar.gz /usr/src/php/ext/v8js /tmp/v8js.tar.gz \
+    && docker-php-ext-install redis gmp pdo pdo_pgsql opcache zip \
+    && rm -rf /usr/src/php/ext/redis /tmp/redis.tar.gz \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && echo "{}" > ~/.composer/composer.json
 
