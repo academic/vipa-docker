@@ -1,4 +1,4 @@
-FROM php:7-0-fpm-alpine
+FROM php:7.0-fpm-alpine
 RUN apk update && apk add git
 
 ENV COMPOSER_HOME /root/composer
