@@ -1,5 +1,4 @@
 PROJECT := OJS
-#include secrets.env
 
 default: test
 
