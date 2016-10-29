@@ -31,6 +31,15 @@ RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-m
     && rm /tmp/memcached.tar.gz
 
 RUN docker-php-ext-install exif
+RUN docker-php-ext-install pdo
+RUN docker-php-ext-install pdo_pgsql
+
+# Install intl
+RUN apt-get install -y libicu-dev
+RUN pecl install intl
+RUN docker-php-ext-install intl
+
+RUN php -m
 
 COPY symfony.ini /usr/local/etc/php/conf.d/
 
@@ -44,6 +53,8 @@ ADD app/ /var/www/html
 WORKDIR /var/www/html
 
 RUN composer config --global github-oauth.github.com  ${GITHUB_TOKEN}
+
+RUN chmod -R 777 app/cache app/logs
 
 RUN composer update -vvv -o
 
