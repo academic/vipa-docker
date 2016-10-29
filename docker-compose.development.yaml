@@ -20,14 +20,14 @@ services:
   #   environment:
   #     MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
 
-  # redis:
-  #   image: redis:3.2.4-alpine
+  redis:
+    image: redis:3.2.4-alpine
 
-  # memcached:
-  #   image: memcached:1.4.32-alpine
+  memcached:
+     image: memcached:1.4.32-alpine
 
-  # elasticsearch:
-  #   image: elasticsearch:5.0.0
-  #   command: -E network.host=0.0.0.0
-  #   environment:    
-  #       ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+  elasticsearch:
+    image: elasticsearch:1.7.5
+    command: -E network.host=0.0.0.0
+    environment:    
+         ES_JAVA_OPTS: "-Xms1g -Xmx1g"
