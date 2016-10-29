@@ -3,13 +3,13 @@ include secrets.env
 
 default: test
 
-build:
+build: prebuild
 	@docker build \
 			--build-arg GITHUB_TOKEN=${GITHUB_TOKEN} \
 			-f ojs/Dockerfile -t ojs:fpm .
 	@docker build -f nginx/Dockerfile -t  ojs:nginx .
 
-development:
+development: build
 	@docker-compose -f docker-compose.$@.yaml --project-name $(PROJECT) up # -d
 
 production:
@@ -28,10 +28,9 @@ ojs/master.zip:
 	@curl -L https://github.com/ojs/ojs/archive/master.zip > $@
 
 unzip: ojs/master.zip
-	@unzip -jo $< -d app/
+	@unzip -o $< && mv ojs-master app/
 
-prebuild: builder
-	@mkdir -p app; tar xf ojs/ojs.tar.gz -C app/
+prebuild: builder unzip
 	@docker run --rm -it \
 		--env-file=secrets.env \
 		--volume /home/ahmed/domains/okulbilisim/ojs/app:/app ojs:builder install

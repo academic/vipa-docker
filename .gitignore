@@ -75,4 +75,5 @@ node_modules/
 *.rej
 
 web/assets/prod
-
+app/
+*.zip
