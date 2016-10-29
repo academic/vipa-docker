@@ -21,7 +21,16 @@ down:
 workarounds:
 	@sysctl -w vm.max_map_count=262144
 
+builder:
+	$(MAKE) -C $@
+
+prebuild: builder
+	@mkdir -p app; tar xf ojs/ojs.tar.gz -C app/
+	@docker run --rm -it \
+		--env-file=secrets.env \
+		--volume /home/ahmed/domains/okulbilisim/ojs/app:/app ojs:builder install
+
 test: build
 	@docker run -it --env-file=secrets.env ojs pwd # sh -li
 
-.PHONY: default build development down production workarounds
+.PHONY: default build development down production workarounds prebuild builder
