@@ -1,5 +1,5 @@
 PROJECT := OJS
-include secrets.env
+#include secrets.env
 
 default: test
 
@@ -32,10 +32,9 @@ unzip: ojs/master.zip
 
 prebuild: builder unzip
 	@docker run --rm -it \
-		--env-file=secrets.env \
 		--volume $(CURDIR)/app:/app ojs:builder install
 
 test: build
-	@docker run -it --env-file=secrets.env ojs pwd # sh -li
+	@docker run -it ojs pwd # sh -li
 
 .PHONY: default build development down production workarounds prebuild builder unzip
