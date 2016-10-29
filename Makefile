@@ -1,8 +1,8 @@
 PROJECT := OJS
 
-default: test
+default: build
 
-build: prebuild
+build:
 	@docker build \
 			--build-arg GITHUB_TOKEN=${GITHUB_TOKEN} \
 			-f ojs/Dockerfile -t ojs:fpm .

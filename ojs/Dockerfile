@@ -20,7 +20,7 @@ RUN set -ex \
     && rm -rf /usr/src/php/ext/redis /tmp/redis.tar.gz /usr/src/php/ext/v8js /tmp/v8js.tar.gz \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY symfony.ini /usr/local/etc/php/conf.d/
+COPY ojs/symfony.ini /usr/local/etc/php/conf.d/
 
 EXPOSE 9000
 CMD ["php-fpm"]
@@ -29,8 +29,7 @@ ENV COMPOSER_HOME /root/composer
 ARG GITHUB_TOKEN
 
 ADD app/ /var/www/html
-WORKDIR /var/www/html/web
-
+WORKDIR /var/www/html
 
 RUN composer update -vvv -o && \
     bower update && \
