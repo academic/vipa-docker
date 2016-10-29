@@ -9,5 +9,4 @@ RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev lib
   docker-php-ext-install -j${NPROC} gd && \
   apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
 
-  # RUN apk update && apk add php5-exif
   RUN docker-php-ext-install exif

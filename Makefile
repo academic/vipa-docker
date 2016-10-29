@@ -24,6 +24,12 @@ workarounds:
 builder:
 	$(MAKE) -C $@
 
+ojs/master.zip:
+	@curl -L https://github.com/ojs/ojs/archive/master.zip > $@
+
+unzip: ojs/master.zip
+	@unzip -jo $< -d app/
+
 prebuild: builder
 	@mkdir -p app; tar xf ojs/ojs.tar.gz -C app/
 	@docker run --rm -it \
@@ -33,4 +39,4 @@ prebuild: builder
 test: build
 	@docker run -it --env-file=secrets.env ojs pwd # sh -li
 
-.PHONY: default build development down production workarounds prebuild builder
+.PHONY: default build development down production workarounds prebuild builder unzip
