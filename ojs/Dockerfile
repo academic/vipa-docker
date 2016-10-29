@@ -54,7 +54,14 @@ WORKDIR /var/www/html
 
 RUN composer config --global github-oauth.github.com  ${GITHUB_TOKEN}
 
-RUN chmod -R 777 /var/www/html/app/cache /var/www/html/app/logs 
+RUN usermod -u 1000 www-data
+
+RUN rm -rf /var/www/html/app/cache
+RUN rm -rf /var/www/html/app/logs
+RUN mkdir -p /var/www/html/app/cache
+RUN mkdir -p /var/www/html/app/logs
+RUN chmod 777 /var/www/html/app/cache
+RUN chmod 777 /var/www/html/app/logs
 
 RUN composer install --no-interaction --prefer-dist
 
