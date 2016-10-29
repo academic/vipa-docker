@@ -30,6 +30,8 @@ RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-m
     && docker-php-ext-install memcached \
     && rm /tmp/memcached.tar.gz
 
+RUN docker-php-ext-install exif
+
 COPY symfony.ini /usr/local/etc/php/conf.d/
 
 EXPOSE 9000
@@ -41,7 +43,7 @@ ARG GITHUB_TOKEN
 ADD app/ /var/www/html
 WORKDIR /var/www/html
 
-RUN composer config -g http://github-oauth.github.com  ${GITHUB_TOKEN}
+RUN composer config -g http://github-oauth.github.com  ${GITHUB_TOKEN} --no-plugins --no-scripts
 
 RUN composer update -vvv -o
 
