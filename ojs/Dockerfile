@@ -54,11 +54,11 @@ WORKDIR /var/www/html
 
 RUN composer config --global github-oauth.github.com  ${GITHUB_TOKEN}
 
-RUN chmod -R 777 app/cache app/logs
+RUN chmod -R 777 /var/www/html/app/cache /var/www/html/app/logs 
 
-RUN composer update -vvv -o
+RUN composer install --no-interaction --prefer-dist
 
-RUN bower update && \
+RUN bower install --force --silent && \
     php app/console assets:install web --symlink && \
     php app/console assetic:dump && \
     chmod -R 777 app/cache app/logs && \
