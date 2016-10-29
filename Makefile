@@ -27,7 +27,7 @@ ojs/master.zip:
 	@curl -L https://github.com/ojs/ojs/archive/master.zip > $@
 
 unzip: ojs/master.zip
-	@unzip -o $< && rm -rf app/ojs-master && mv -f ojs-master app/
+	@unzip -o $< && rsync -avh --update -e  ojs-master app/ojs-master
 
 prebuild: builder unzip
 	@docker run --rm -it \
