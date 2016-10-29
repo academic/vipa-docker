@@ -28,9 +28,6 @@ CMD ["php-fpm"]
 ENV COMPOSER_HOME /root/composer
 ARG GITHUB_TOKEN
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-
 ADD app/ /var/www/html
 WORKDIR /var/www/html/web
 
