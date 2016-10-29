@@ -65,13 +65,19 @@ RUN chmod 777 /var/www/html/app/logs
 
 RUN composer install --no-interaction --prefer-dist
 
-RUN bower install --force --silent && \
-    php app/console assets:install web --symlink && \
+RUN apt-get install -y nodejs nodejs-legacy npm
+
+RUN npm install -g bower
+
+RUN bower install --force --silent --allow-root
+
+RUN php app/console assets:install web --symlink && \
     php app/console assetic:dump && \
     chmod -R 777 app/cache app/logs && \
     php app/console doctrine:schema:drop --force && \
-    php app/console doctrine:schema:create && \
-    php app/console ojs:install && \
+    php app/console doctrine:schema:create
+
+RUN php app/console ojs:install  --no-interaction && \
     php app/console ojs:install:samples && \
     php app/console h4cc_alice_fixtures:load:sets && \
     composer show

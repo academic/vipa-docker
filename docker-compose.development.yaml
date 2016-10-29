@@ -1,24 +1,7 @@
 version: "2.0"
 
 services:
-  nginx:
-    image: ojs:nginx
-    links:
-      - fpm
-      - postgres
-      - elasticsearch
-      - redis
-      - memcached
-    volumes:
-      - ./app/web:/srv/web
-    depends_on:
-      - fpm
 
-  fpm:
-    image: ojs:fpm
-    command: php-fpm --nodaemonize
-    env_file: secrets.env
-    
   postgres:
     image: postgres
     environment:
@@ -38,3 +21,27 @@ services:
     command: -E network.host=0.0.0.0
     environment:    
          ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+
+  nginx:
+    build: ./nginx
+    image: ojs:nginx
+    links:
+      - fpm
+      - postgres
+      - elasticsearch
+      - redis
+      - memcached
+    volumes:
+      - ../app/web:/srv/web
+    depends_on:
+      - fpm
+      - postgres
+      - redis
+      - memcached
+      - elasticsearch
+
+  fpm:
+    build: ./ojs
+    image: ojs:fpm
+    command: php-fpm --nodaemonize
+    env_file: secrets.env

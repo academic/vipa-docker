@@ -8,8 +8,8 @@ build:
 			-f ojs/Dockerfile -t ojs:fpm .
 	@docker build -f nginx/Dockerfile -t  ojs:nginx .
 
-development: build
-	@docker-compose -f docker-compose.$@.yaml --project-name $(PROJECT) up # -d
+development:
+	@docker-compose -f docker-compose.$@.yaml --project-name $(PROJECT) up -d
 
 production:
 	@docker-compose -f docker-compose.$@.yaml --project-name $(PROJECT) up -d
