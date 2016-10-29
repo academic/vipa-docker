@@ -1,0 +1,23 @@
+web:
+  image: okulbilisim/ojs
+  ports:
+    - "80:80"
+  links:
+    - mysql
+    - mongodb
+    - elasticsearch
+  volumes:
+    - ~/www/ojs/www:/var/www
+mysql:
+  image: dockerfile/mysql
+  ports:
+    - "3306:3306"
+mongodb:
+  image: dockerfile/mongodb
+  ports:
+    - "27017:27017"
+elasticsearch:
+  image: dockerfile/elasticsearch
+  ports:
+    - "9200:9200"
+    - "9300:9300"
