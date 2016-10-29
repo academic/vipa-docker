@@ -5,6 +5,10 @@ services:
     image: ojs:nginx
     links:
       - fpm
+      - postgres
+      - elasticsearch
+      - redis
+      - memcached
     volumes:
       - ./app/web:/srv/web
     depends_on:
@@ -15,10 +19,13 @@ services:
     command: php-fpm --nodaemonize
     env_file: secrets.env
     
-  # mysql:
-  #   image: mysql:5.5.52
-  #   environment:
-  #     MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+  postgres:
+    image: postgres
+    environment:
+        - POSTGRES_USER=ojs
+        - POSTGRES_PASSWORD=ojs
+    ports:
+        - "5432:5432"
 
   redis:
     image: redis:3.2.4-alpine
