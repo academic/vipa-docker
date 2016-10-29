@@ -6,7 +6,6 @@ RUN set -ex \
     && echo "deb-src http://ppa.launchpad.net/pinepain/libv8-5.2/ubuntu wily main" >> /etc/apt/sources.list \
     && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 40976EAF437D05B5 3B4FE6ACC0B21F32 60C60AA4 \
     && apt-get update && apt-get install -y git libgmp-dev libpq-dev libfreetype6-dev libjpeg62-turbo-dev  libmcrypt-dev libpng12-dev libmemcached-dev \
-    && pecl install memcached \
     && docker-php-ext-enable memcached \
     && apt-get install nodejs -y \
     && apt-get install npm -y \
