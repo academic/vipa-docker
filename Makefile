@@ -28,12 +28,12 @@ ojs/master.zip:
 	@curl -L https://github.com/ojs/ojs/archive/master.zip > $@
 
 unzip: ojs/master.zip
-	@unzip -o $< && mv ojs-master app/
+	@unzip -o $< && mv -f ojs-master app/
 
 prebuild: builder unzip
 	@docker run --rm -it \
 		--env-file=secrets.env \
-		--volume /home/ahmed/domains/okulbilisim/ojs/app:/app ojs:builder install
+		--volume $(CURDIR)/app:/app ojs:builder install
 
 test: build
 	@docker run -it --env-file=secrets.env ojs pwd # sh -li
