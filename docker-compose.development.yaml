@@ -39,6 +39,8 @@ services:
       - redis
       - memcached
       - elasticsearch
+    ports:
+        - "80:80"
 
   fpm:
     build: ./ojs
