@@ -3,13 +3,15 @@ PROJECT := OJS
 default: build
 
 build:
+	@docker-compose -f docker-compose.development.yaml --project ojs up -d postgres
+
 	@docker build \
 			--build-arg GITHUB_TOKEN=${GITHUB_TOKEN} \
 			-f ojs/Dockerfile -t ojs:fpm .
 	@docker build -f nginx/Dockerfile -t  ojs:nginx .
 
 development:
-	@docker-compose -f docker-compose.$@.yaml --project-name $(PROJECT) up -d
+	@docker-compose -f docker-compose.$@.yaml --project-name $(PROJECT) up
 
 production:
 	@docker-compose -f docker-compose.$@.yaml --project-name $(PROJECT) up -d

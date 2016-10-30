@@ -52,7 +52,7 @@ ARG GITHUB_TOKEN
 ADD app/ /var/www/html
 WORKDIR /var/www/html
 
-RUN composer config --global github-oauth.github.com  ${GITHUB_TOKEN}
+RUN composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 
 RUN usermod -u 1000 www-data
 
@@ -73,11 +73,11 @@ RUN bower install --force --silent --allow-root
 
 RUN php app/console assets:install web --symlink && \
     php app/console assetic:dump && \
-    chmod -R 777 app/cache app/logs && \
-    php app/console doctrine:schema:drop --force && \
-    php app/console doctrine:schema:create
+    chmod -R 777 app/cache app/logs
 
-RUN php app/console ojs:install  --no-interaction && \
+CMD php app/console doctrine:schema:drop --force && \
+    php app/console doctrine:schema:create && \
+    php app/console ojs:install  --no-interaction && \
     php app/console ojs:install:samples && \
     php app/console h4cc_alice_fixtures:load:sets && \
     composer show

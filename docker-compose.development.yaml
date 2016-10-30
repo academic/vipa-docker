@@ -43,5 +43,4 @@ services:
   fpm:
     build: ./ojs
     image: ojs:fpm
-    command: php-fpm --nodaemonize
     env_file: secrets.env
