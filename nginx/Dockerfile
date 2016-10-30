@@ -1,2 +1,2 @@
-FROM guneysu/nginx:latest
-ADD nginx/nginx.conf /etc/nginx/nginx.conf
+FROM nginx:1.11.5-alpine
+ADD nginx.conf /etc/nginx/nginx.conf
