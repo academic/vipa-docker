@@ -44,3 +44,13 @@ services:
     build: ./ojs
     image: ojs:fpm
     env_file: secrets.env
+    links:
+      - postgres
+      - elasticsearch
+      - redis
+      - memcached
+    depends_on:
+      - postgres
+      - redis
+      - memcached
+      - elasticsearch
