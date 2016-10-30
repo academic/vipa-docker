@@ -24,6 +24,7 @@ services:
 
   nginx:
     build: ./nginx
+    command: nginx -g "daemon off;" -c /etc/nginx/nginx.conf
     image: ojs:nginx
     links:
       - fpm

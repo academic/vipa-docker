@@ -2,12 +2,14 @@ PROJECT := OJS
 
 default: build
 
-build:
+build: nginx
 	@docker-compose -f docker-compose.development.yaml --project ojs up -d postgres
 
 	@docker build \
 			--build-arg GITHUB_TOKEN=${GITHUB_TOKEN} \
 			-f ojs/Dockerfile -t ojs:fpm .
+
+nginx:
 	@docker build -f nginx/Dockerfile -t  ojs:nginx .
 
 development:
@@ -38,4 +40,4 @@ prebuild: builder unzip
 test: build
 	@docker run -it ojs pwd # sh -li
 
-.PHONY: default build development down production workarounds prebuild builder unzip
+.PHONY: default build development down production workarounds prebuild builder unzip nginx
